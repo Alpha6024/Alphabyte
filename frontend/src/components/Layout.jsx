@@ -1,12 +1,21 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const Layout = ({ children, currentUser, setCurrentUser, userType, setUserType }) => {
+  const navigate = useNavigate();
+  
   const userTypes = [
     { value: 'student', label: 'Student Dashboard', icon: '🎓' },
     { value: 'organizer', label: 'Event Organizer', icon: '📋' },
     { value: 'admin', label: 'Admin Dashboard', icon: '⚙️' }
   ];
+
+  const handleUserTypeChange = (e) => {
+    const newUserType = e.target.value;
+    setUserType(newUserType);
+    navigate(`/${newUserType}`);
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50">
@@ -38,7 +47,7 @@ const Layout = ({ children, currentUser, setCurrentUser, userType, setUserType }
             <div className="flex items-center space-x-4">
               <select
                 value={userType}
-                onChange={(e) => setUserType(e.target.value)}
+                onChange={handleUserTypeChange}
                 className="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none cursor-pointer pr-10 bg-no-repeat bg-right"
                 style={{
                   backgroundImage: `url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e")`,
